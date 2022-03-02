@@ -1,0 +1,28 @@
+#include <SoftwareSerial.h>
+#include <LiquidCrystal.h>
+
+//CODIGO BASADO EN LAS MONITORIAS Y ASESORIAS PARA EL DESARROLLO DEL PARCIAL.
+
+unsigned char x;
+const int myserial_RX = 9;
+const int myserial_TX = 8;
+SoftwareSerial mySerial(myserial_RX, myserial_TX);
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+  lcd.begin(16, 2);
+  lcd.print("hello, world!");
+  Serial.begin(9600);
+  mySerial.begin(4800);
+}
+
+void loop() {
+  if(mySerial.available()){
+  	x=mySerial.read();
+    Serial.println(x);
+    
+  lcd.setCursor(0, 1);
+  lcd.print(x);
+  }}
+ 
