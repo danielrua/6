@@ -1,0 +1,61 @@
+int Delay = 2000;
+int latchPin = 11;      
+int clockPin = 9;      
+int dataPin = 12;     
+
+byte leds = 0;
+
+void ActualizarRegistro()
+{
+   digitalWrite(latchPin, LOW);
+   shiftOut(dataPin, clockPin, LSBFIRST, leds); 
+   digitalWrite(latchPin, HIGH);
+}
+
+void ActualizarRegistro2() 
+{ 
+   digitalWrite(latchPin, HIGH);
+   shiftOut(dataPin, clockPin, LSBFIRST, leds); //if we start with MSBFIRST in this function, then it would start from the most significant, that is the 1st pinout.
+   digitalWrite(latchPin, LOW);
+}
+
+void setup() 
+{
+  pinMode(latchPin, OUTPUT);
+  pinMode(dataPin, OUTPUT);  
+  pinMode(clockPin, OUTPUT);
+   Serial.begin(9600);
+}
+
+  
+
+
+void loop() 
+{
+   leds = 0;
+  ActualizarRegistro();
+  for (int i = 0; i < 8; i++)
+  {
+    delay(Delay);
+    bitSet(leds, i); 
+    ActualizarRegistro();   
+  
+    
+    
+  } 
+ 
+  for (int i = 0; i < 8; i++)
+  {
+	
+    bitClear(leds, i); 
+    ActualizarRegistro2();  
+    delay(Delay);
+   
+
+  }
+  
+ 
+    
+}
+
+
