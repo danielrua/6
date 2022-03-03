@@ -1,0 +1,33 @@
+#include <SoftwareSerial.h>
+#define LATCH_PIN 5 // CI 12
+#define CLOCK_PIN 6 // CI 11
+#define DATA_PIN 4 // CI 14
+
+int TIEMPO = 3000;
+int datos1[]={10,3,2};
+int tam = (sizeof(datos1) / sizeof(byte))/2;
+
+
+void setup() {
+pinMode(LATCH_PIN, OUTPUT);
+pinMode(CLOCK_PIN, OUTPUT);
+pinMode(DATA_PIN, OUTPUT);
+Serial.begin(9600);
+//delay(500);
+  
+}
+
+void loop()
+{	
+  
+  for (int i = 0;i<tam;i++ ){
+    Serial.println(datos1[0]);
+    
+    digitalWrite(LATCH_PIN, LOW);
+    shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, datos1[i]);
+    digitalWrite(LATCH_PIN, HIGH);   
+    delay(TIEMPO);
+  }
+  
+  
+}
